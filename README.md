@@ -33,6 +33,23 @@ Implementacja agenta (traktora), który będzie się poruszał po polu i wykonyw
 
 Projekt będzie pisany w Python (wersji 3). W tej sekcji należy podać jeszcze wykorzystywane biblioteki, umieścić przydatne linki i mini tutoriale odnośnie pracy w projekcie. 
 
-### Praca z GitHub
+## Praca z GitHub
 
-Informacje odnośnie pracy z GitHubem.
+### Podstawowe Info
+
+Każdy z członków grupy jest dodany do repozytorium jako 'Collaborator', co oznacza że nie należy forkować tego repozytorium, lecz bezpośrednio je klonować do siebie na maszyne lokalną. 
+
+```master``` zawiera wersje projektu 'ready to deploy', czyli aktualnie działającą i stabilną wersje. Sub-brach ```dev``` zawiera aktualnie rozwijaną wersję projektu, która powinna być z reguły funkcjonalna.
+Każdy nowy branch jest tworzony od ```dev```. Te tak zwane feature branche powinny być tworzone w celu zaimplementowania konkretnej jednej funkcji/zmiany. 
+
+Podstawowy schemat Git Flow w tym projekcie:
+1. Zastanawiamy się nad zmianą jaką chcemy wprowadić do projektu.
+2. Tworzymy sub-branch od ```dev``` o nazwie ```kolabolator-nazwa-zmiany```
+3. Gdy dokonamy wszytskich zmian, pushujemy brancha na zdalne repozytorium 
+4. Po pushu wykonujemy pull-request do dev
+5. Admin repozytorium zatwierdza zmiany lub je odrzuca i daje odpowiedni komentarz.
+6. Jeżeli branch zostaje zatwierdzony, zostanie zmergowany z ```dev``` i usunięty. W przeciwnym wypadku wróc do kroku 3.
+
+### Szczegułowe info
+
+Tu będą znajdować się wszytskie polecenia potrzebne do pracy z projektem wraz z wytłumaczeniami.

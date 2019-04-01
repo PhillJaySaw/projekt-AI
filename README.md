@@ -2,7 +2,7 @@
 
 Projekt grupowy z zajęć Sztuczna Inteligencja, pod tytułm "Inteligentny Traktor".
 
-**Członkowie Grupy: **
+__Członkowie Grupy:__
 
 - Michał Mruk
 - Norbert Walczak

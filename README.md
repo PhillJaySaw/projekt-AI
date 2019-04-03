@@ -13,21 +13,40 @@ __Członkowie Grupy:__
 
 Zadaniem inteligentnego traktora jest uprawa pola. Traktor powinien po nim nawigować, sprawdzać stan ziemi, zboża i wykonywać odpowiednie operacje na każdym z nich. 
 
-## Pod projekty
+## Część wspólna projektu
 
-Krytyczne punkty projektu, ich opisy oraz osoby odpowiedzialne.
+Nad tą częścią pracują wszyscy uczestnicy, czyli stworzenie środowiska dla agenta na podstawie wykładów ( *Techniki i narzędzia reprezentacji wiedzy*) oraz zastosowanie metod rozwiązywania problemów do planwania ruchu agenta w środowisku (*Strategie rozwiązywania problemów*)
 
-### Interface
+1. Implementacja środowiska - środowiskiem jest pole, które na którym się znajdują 
+2. Implementacja agenta - traktor będzie się poruszał po polu i wykonywał odpowiednie czynnośći na konkretnych uprawach. Trzeba przeanalizować jakie akcje może wykonywać traktor w stosunku do stanów pola. Ustalić jego cel, sensory i efektory.
+3. Reprezentacja wiedzy
+  Techniki:
+  - sieci semantyczne
+  - systemy ram
+  - grafy konceptualne
+  - logika pierwszego rzędu
+  - logika klauzul/Prolog
+  - zbiory rozmyte
+4. Planowanie ruchu
+5. Zgodność ze specyfikacją zadania
+6. Bezawaryjne działanie
 
-Zaprojektowanie i implementacja interfejsu aplikacji. Jak będzie wyglądała interakcja z programem? Ustawienia itp. 
+## Podprojekty
 
-### Środowisko/Pole/Rzeczywistość po jakim będzie się poruszał traktor
+1. ```Michał``` Przygotowanie danych wejściowych/zbioru uczącego i testowanego
+2. ```Phillip``` Poprawność implementacji/integracji opracowanej metody w projekcie
+3. ```Norbert i Paweł``` Pełność i poprawnośc omówienia tematu i przygotwanie raportu
 
-Zaimplementować "środowisko", w którym będzie żył nasz agent. Ustalić co agent będzie mógł analizować i jakie mogą być możliwe stany analizowanych obiektów.
-
-### Agent: Traktor
-
-Implementacja agenta (traktora), który będzie się poruszał po polu i wykonywał odpowiednie czynnośći na konkretnych zbożach. Trzeba przeanalizować jakie akcje może wykonywać traktor w stosunku do stanów pola. Ustalić jego cel, sensory i efektory.
+## Strategie rozwiązywania problemów
+1. przeszukiwanie przestrzeni stanów (strategie niepoinformowane)
+  - DFS
+  - DLS
+  - IDDFS 
+  - BFS
+  - UCS
+2. przeszukiwanie przestrzeni stanów (strategie poinformowane)
+  - A*
+  - IDA*
 
 ## Standarty kodu
 
@@ -40,7 +59,7 @@ Projekt będzie pisany w Python (wersji 3). W tej sekcji należy podać jeszcze 
 Każdy z członków grupy jest dodany do repozytorium jako 'Collaborator', co oznacza że nie należy forkować tego repozytorium, lecz bezpośrednio je klonować do siebie na maszyne lokalną. 
 
 ```master``` zawiera wersje projektu 'ready to deploy', czyli aktualnie działającą i stabilną wersje. Sub-brach ```dev``` zawiera aktualnie rozwijaną wersję projektu, która powinna być z reguły funkcjonalna.
-Każdy nowy branch jest tworzony od ```dev```. Te tak zwane feature branche powinny być tworzone w celu zaimplementowania konkretnej jednej funkcji/zmiany. 
+Każdy nowy branch jest tworzony od ```dev```. Te tak zwane feature branche powinny być tworzone w celu zaimplementowania konkretnej funkcji/zmiany. 
 
 Podstawowy schemat Git Flow w tym projekcie:
 1. Zastanawiamy się nad zmianą jaką chcemy wprowadić do projektu.

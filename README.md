@@ -80,14 +80,22 @@ Tu będą znajdować się wszytskie polecenia potrzebne do pracy z projektem wra
 1. Sklonować repozytorium.
   ```git clone <url repo>```
 2. Zmienić branch ```master``` na ```dev```
-  ```git checkout dev```
+  ```
+  git checkout dev
+  ```
   Jeżeli po wykonaniu tej operacji, dostaniecie komunikat:
-  ```Branch 'dev' set up to track remote branch 'dev' from 'origin'. Switched to a new branch 'dev'```
+  ```
+  Branch 'dev' set up to track remote branch 'dev' from 'origin'. Switched to a new branch 'dev'
+  ```
   To krok 3 jest zbędny. 
 3. Ustawiamy ```origin/dev``` jako _upstream_ naszego lokalnego ```dev```. Dzięki temu, aby uaktualnić nasze lokalne repozytorium, wystarczy wpisać ```git pull```
-  ```git branch --set-upstream-to=origin/dev dev```
+  ```
+  git branch --set-upstream-to=origin/dev dev
+  ```
 4. Tworzymy nowego feature brancha od ```dev```
-  ```git checkout -b phillip-test-branch dev```
+  ```
+  git checkout -b phillip-test-branch dev
+  ```
   Tu po utworzeniu nowego feature brancha, można wykonać polecenie z kroku trzeciego, aby nasz branch śledził zmiany na dev.
 5. Tworzymy plik <imię>-test.txt
 6. Następnie wykonujemy git status, analizujemy zmiany, a nastepnie add i commit
@@ -97,6 +105,10 @@ Tu będą znajdować się wszytskie polecenia potrzebne do pracy z projektem wra
   git commit -m "tutaj napisac jakiś sensowny commit message"
   ```
 7. Teraz możemy wykonać push całego naszego brancha
-  ```git push origin <nazwa brancha>```
-8. Następnie, wchodzicie na repozytorium GitHub, szukacie zakładki z listą branchów i wykonujecie pullrequest waszego brancha. **UWAGA:** Pamiętać aby pull request był wykonany z feature brancha do ```dev``` a nie do ```master```
+  ```
+  git push origin <nazwa brancha>
+  ```
+8. Następnie, wchodzicie na repozytorium GitHub, szukacie zakładki z listą branchów i wykonujecie pullrequest waszego brancha. **UWAGA:** Pamiętać aby pull request był wykonany z feature brancha do ```dev```, a nie do ```master```.
+9. Po wykonaniu pull requesta, czekacie na jego zatwierdzenie przez właściciela Repo.
+10. Jeżeli pullrequest waszego brancha zosatanie zatwierdzony, należy go usunąć z Github (chyba że już to zrobiła osoba zatwierdzająca pull) oraz z lokalnego repozytorium.
 

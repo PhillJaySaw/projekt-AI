@@ -56,7 +56,8 @@ def astar(maze, start, end):
         # Generate children
         children = []
         # Adjacent squares
-        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]:
+        # add (-1, -1), (-1, 1), (1, -1), (1, 1) for diagonall movement
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
 
             # Get node position
             node_position = (
@@ -83,7 +84,6 @@ def astar(maze, start, end):
             # Child is on the closed list
             for closed_child in closed_list:
                 if child == closed_child:
-                    print("BREAK")
                     didBreak = True
                     break
 
@@ -100,7 +100,6 @@ def astar(maze, start, end):
             for open_node in open_list:
                 if child == open_node and child.g > open_node.g:
                     didBreak = True
-                    print("BREAK")
                     break
 
             if didBreak:

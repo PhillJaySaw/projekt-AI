@@ -6,6 +6,7 @@ import pygame as pg
 import sys
 import math
 import time
+import numpy
 from settings import *
 from sprites import *
 from a_star import *
@@ -22,6 +23,7 @@ class Game:
         pg.key.set_repeat(500, 100)
         self.load_data()
         self.maze = generate_pathfinder_map()
+        self.path = []
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -76,8 +78,8 @@ class Game:
         # divide pixel value by tile size
         mousePosTile = [0, 0]
         mousePos = pg.mouse.get_pos()
-        mousePosTile[0] = math.floor((mousePos[0] / 32))
         mousePosTile[1] = math.floor((mousePos[1] / 32))
+        mousePosTile[0] = math.floor((mousePos[0] / 32))
         return mousePosTile
 
     def events(self):
@@ -88,37 +90,31 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
-                if event.key == pg.K_LEFT:
-                    self.player.move(dx=-1)
-                if event.key == pg.K_RIGHT:
-                    self.player.move(dx=1)
-                if event.key == pg.K_UP:
-                    self.player.move(dy=-1)
-                if event.key == pg.K_DOWN:
-                    self.player.move(dy=1)
             if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 # select dest for player
                 # use pathfinder
                 pos = self.get_mouse_pos_tile()
 
-                start = (self.player.x, self.player.y)
-                end = (pos[0], pos[1])
+                # values flipped for compatibility with a* algorithm
+                start = (self.player.y, self.player.x)
+                end = (pos[1], pos[0])
 
                 print("start: " + str(start))
                 print("end: " + str(end))
 
-                path = astar(self.maze, start, end)
-                # print(self.maze)
+                self.path = astar(self.maze, start, end)
+
+                # values flipped for compatibility with a* algorithm
                 print("generated path: " + str(path))
+                self.path = list(map(lambda t: (t[1], t[0]), self.path))
 
-                for i in range(len(path)):
-                    for j in range(len(path[i])):
-                        self.player.x = path[i][0]
-                        self.player.y = path[i][1]
-                        self.update()
-                        self.draw()
-
-                    pg.time.delay(10)
+        # move player according to generated path
+        if len(self.path) > 0:
+            nextMove = self.path.pop(0)
+            print(str(nextMove) + " " + str((self.player.x, self.player.y)))
+            nextMove = numpy.subtract(nextMove, (self.player.x, self.player.y))
+            print(nextMove)
+            self.player.move(dx=nextMove[0], dy=nextMove[1])
 
     def show_start_screen(self):
         pass
@@ -127,17 +123,12 @@ class Game:
         pass
 
 
+print(str(numpy.subtract((1, 1), (1, 2))))
+
+
 # create the game object
 g = Game()
 g.show_start_screen()
-
-# pathfinder example
-
-# start = (0, 0)
-# end = (22, 15)
-# maze = generate_pathfinder_map()
-# path = astar(maze, start, end)
-# print(path)
 
 while True:
     g.new()

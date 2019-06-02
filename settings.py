@@ -10,7 +10,7 @@ YELLOW = (255, 255, 0)
 # game settings
 WIDTH = 320   # 16 * 64 or 32 * 32 or 64 * 16
 HEIGHT = 320  # 16 * 48 or 32 * 24 or 64 * 12
-FPS = 60
+FPS = 15
 TITLE = "Tilemap Demo"
 BGCOLOR = DARKGREY
 

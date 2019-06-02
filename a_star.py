@@ -63,7 +63,7 @@ def astar(maze, start, end):
         children = []
         # Adjacent squares
         # add (-1, -1), (-1, 1), (1, -1), (1, 1) for diagonall movement
-        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]:
 
             # Get node position
             node_position = (

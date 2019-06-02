@@ -36,12 +36,20 @@ class Game:
         # initialize all variables and do all the setup for a new game
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
+        self.crops = pg.sprite.Group()
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
+                if tile != '1':
+                    Crop(self, col, row)
+                # if tile == 'P':
+                #     self.player = Player(self, col, row)
+        for row, tiles in enumerate(self.map_data):
+            for col, tile in enumerate(tiles):
                 if tile == 'P':
                     self.player = Player(self, col, row)
+                    break
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -68,9 +76,9 @@ class Game:
 
     def draw(self):
         self.screen.fill(BGCOLOR)
-        self.draw_grid()
-        self.draw_grid()
         self.all_sprites.draw(self.screen)
+        self.draw_grid()
+        self.draw_grid()
         pg.display.flip()
 
     def get_mouse_pos_tile(self):
@@ -99,22 +107,25 @@ class Game:
                 start = (self.player.y, self.player.x)
                 end = (pos[1], pos[0])
 
-                print("start: " + str(start))
-                print("end: " + str(end))
+                # print("start: " + str(start))
+                # print("end: " + str(end))
 
                 self.path = astar(self.maze, start, end)
 
                 # values flipped for compatibility with a* algorithm
-                print("generated path: " + str(path))
+                # print("generated path: " + str(path))
                 self.path = list(map(lambda t: (t[1], t[0]), self.path))
 
         # move player according to generated path
         if len(self.path) > 0:
             nextMove = self.path.pop(0)
-            print(str(nextMove) + " " + str((self.player.x, self.player.y)))
+            # print(str(nextMove) + " " + str((self.player.x, self.player.y)))
             nextMove = numpy.subtract(nextMove, (self.player.x, self.player.y))
-            print(nextMove)
+            # print(nextMove)
             self.player.move(dx=nextMove[0], dy=nextMove[1])
+
+            if len(self.path) == 0:
+                print(str(self.player.get_current_crop()))
 
     def show_start_screen(self):
         pass
@@ -123,7 +134,7 @@ class Game:
         pass
 
 
-print(str(numpy.subtract((1, 1), (1, 2))))
+# print(str(numpy.subtract((1, 1), (1, 2))))
 
 
 # create the game object

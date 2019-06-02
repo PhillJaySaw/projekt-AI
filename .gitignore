@@ -3,5 +3,5 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-__pycache__/
+/__pycache__
 *.pyc

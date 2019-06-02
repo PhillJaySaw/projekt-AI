@@ -4,3 +4,4 @@
 .AppleDouble
 .LSOverride
 __pycache__/
+*.pyc

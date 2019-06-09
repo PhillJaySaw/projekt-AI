@@ -7,11 +7,11 @@ features = [[1, 3, 3, 3, 1], [1, 2, 3, 3, 0], [1, 1, 1, 1, 1], [1, 3, 2, 3, 1],
             [2, 3, 1, 1, 1], [2, 1, 3, 2, 1], [2, 2, 2, 3, 1], [2, 3, 3, 3, 0],
             [2, 3, 2, 2, 1], [2, 2, 3, 2, 1], [2, 2, 2, 3, 1], [2, 2, 2, 2, 0],
             [2, 1, 3, 3, 0], [2, 3, 3, 3, 0], [3, 2, 2, 2, 0], [2, 1, 2, 2, 0],
-            [3, 1, 1, 3, 1], [2, 1, 1, 2, 1], [3, 1, 1, 0, 1]]
+            [3, 1, 1, 3, 1], [2, 1, 1, 2, 1]]
 labels = ['harvest', 'harvest', 'harvest', 'harvest', 'water',
           'pest', 'weed', 'fertilizer', 'water', 'pest', 'weed',
           'fertilizer', 'fertilizer', 'fertilizer', 'fertilizer',
-          'fertilizer', 'weed', 'weed', 'fertilizer']
+          'fertilizer', 'weed', 'weed']
 # harvest 1 znaczy ze dojrzała, na potrzeby programu od razu po zebraniu zasadzona jest nowa niedojrzała roślina
 # weed pest weed od 1 do 3, im wyższa cyfra tym wieksza potrzeba danej akcji
 # fertilizer 0 - trzeba nawozić, 1 - nie trzeba

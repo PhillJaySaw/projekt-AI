@@ -1,6 +1,7 @@
 import pygame as pg
 from settings import *
 from a_star import *
+import random
 
 
 class Player(pg.sprite.Sprite):
@@ -32,7 +33,6 @@ class Player(pg.sprite.Sprite):
     def move_to_point(self, maze, end):
         # move to a given point, using a*
         path = astar(self.maze, (self.y, self.x), end)
-        print(path)
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
@@ -46,9 +46,9 @@ class Player(pg.sprite.Sprite):
                 return [
                     crop.plant_level,
                     crop.water_level,
+                    crop.pest_level,
                     crop.weed_level,
                     crop.fert_level,
-                    crop.pest_level,
                 ]
                 break
 
@@ -62,6 +62,11 @@ class Player(pg.sprite.Sprite):
         for crop in self.fertilizer:
             crop_position = (crop.y, crop.x)
             self.move_to_point(self.maze, crop_position)
+
+    def work_done(self):
+        if len(self.harvest) or len(self.water) or len(self.fertilizer) or len(self.pest) or len(self.weed):
+            return False
+        return True
 
     def update(self):
         self.rect.x = self.x * TILESIZE
@@ -112,29 +117,36 @@ class Crop(pg.sprite.Sprite):
         # crop attributes
         self.plant_level = 3
         self.water_level = 1
+        self.pest_level = 1
         self.weed_level = 1
         self.fert_level = 0
-        self.pest_level = 1
 
     def __str__(self):
         return str([
             self.plant_level,
             self.water_level,
+            self.pest_level,
             self.weed_level,
             self.fert_level,
-            self.pest_level
         ])
 
     def get_crop_values(self):
         return [
             self.plant_level,
             self.water_level,
+            self.pest_level,
             self.weed_level,
             self.fert_level,
-            self.pest_level
         ]
 
     def grow(self):
-        self.plant_level += 1
-        self.water_level += 1
-        self.weed_level += 1
+        if self.plant_level > 1:
+            self.plant_level -= random.randint(0, 1)
+        if self.water_level < 3:
+            self.water_level += random.randint(0, 2)
+        if self.weed_level < 3:
+            self.weed_level += random.randint(0, 2)
+        if self.fert_level < 3:
+            self.fert_level += random.randint(0, 2)
+        if self.pest_level < 3:
+            self.pest_level += random.randint(0, 2)

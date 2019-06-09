@@ -24,6 +24,7 @@ class Game:
         pg.key.set_repeat(500, 100)
         self.load_data()
         self.maze = generate_pathfinder_map()
+        self.goals = []
         self.path = []
 
     def load_data(self):
@@ -42,7 +43,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
-                if tile != '1':
+                if tile == '0' or tile == 'P':
                     Crop(self, col, row)
                 # if tile == 'P':
                 #     self.player = Player(self, col, row)
@@ -51,8 +52,6 @@ class Game:
                 if tile == 'P':
                     self.player = Player(self, col, row, self.maze)
                     break
-
-        self.create_crop_decission()
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -97,7 +96,7 @@ class Game:
         # add all crops to the right decision array of the player
         for crop in self.crops:
             decision = dtree(crop)
-            print(dtree(crop))
+            # print(dtree(crop))
             if decision == "fertilizer":
                 self.player.fertilizer.append(crop)
             elif decision == "harvest":
@@ -108,6 +107,11 @@ class Game:
                 self.player.pest.append(crop)
             elif decision == "harvest":
                 self.player.weed.append(crop)
+
+    def next_day(self):
+        # moves game to next level, all plant grow and change stats
+        for crop in self.crops:
+            crop.grow()
 
     def events(self):
         # catch all events here
@@ -133,22 +137,50 @@ class Game:
 
                 # values flipped for compatibility with a* algorithm
                 # print("generated path: " + str(path))
-                self.path = list(map(lambda t: (t[1], t[0]), self.path))
+                # self.path = list(map(lambda t: (t[1], t[0]), self.path))
             if event.type == pg.KEYDOWN:
                 # this event start the day and crop harvesting
                 if event.key == pg.K_RETURN:
-                    print("enter!!!")
+                    self.next_day()
+                    self.create_crop_decission()
 
-        # move player according to generated path
+        # start working on the field, until all work is done
+        # this statement is only entered if more work is to be done
+        # and there is no current goal
+        if not self.player.work_done() and len(self.path) == 0:
+            if len(self.player.fertilizer):
+                next_crop = self.player.fertilizer.pop(0)
+                print("fert crop " + str((next_crop.x, next_crop.y)))
+                self.path = astar(
+                    self.maze, (self.player.y, self.player.x), (next_crop.y, next_crop.x))
+            elif len(self.player.harvest):
+                next_crop = self.player.harvest.pop(0)
+                print("harv crop " + str((next_crop.x, next_crop.y)))
+                self.path = astar(
+                    self.maze, (self.player.y, self.player.x), (next_crop.y, next_crop.x))
+            elif len(self.player.water):
+                next_crop = self.player.water.pop(0)
+                print("water crop " + str((next_crop.x, next_crop.y)))
+                self.path = astar(
+                    self.maze, (self.player.y, self.player.x), (next_crop.y, next_crop.x))
+            elif len(self.player.pest):
+                next_crop = self.player.pest.pop(0)
+                print("pest crop " + str((next_crop.x, next_crop.y)))
+                self.path = astar(
+                    self.maze, (self.player.y, self.player.x), (next_crop.y, next_crop.x))
+            elif len(self.player.weed):
+                next_crop = self.player.weed.pop(0)
+                print("weed crop " + str((next_crop.x, next_crop.y)))
+                self.path = astar(
+                    self.maze, (self.player.y, self.player.x), (next_crop.y, next_crop.x))
+
+            # move player according to generated path
         if len(self.path) > 0:
             nextMove = self.path.pop(0)
             # print(str(nextMove) + " " + str((self.player.x, self.player.y)))
             nextMove = numpy.subtract(nextMove, (self.player.x, self.player.y))
             # print(nextMove)
             self.player.move(dx=nextMove[0], dy=nextMove[1])
-
-            if len(self.path) == 0:
-                print(str(self.player.get_current_crop()))
 
     def show_start_screen(self):
         pass

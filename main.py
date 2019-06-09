@@ -12,6 +12,7 @@ from sprites import *
 from a_star import *
 from generate_pathfinder_map import *
 from os import path
+from decision import *
 
 
 class Game:
@@ -48,8 +49,10 @@ class Game:
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile == 'P':
-                    self.player = Player(self, col, row)
+                    self.player = Player(self, col, row, self.maze)
                     break
+
+        self.create_crop_decission()
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -90,6 +93,22 @@ class Game:
         mousePosTile[0] = math.floor((mousePos[0] / 32))
         return mousePosTile
 
+    def create_crop_decission(self):
+        # add all crops to the right decision array of the player
+        for crop in self.crops:
+            decision = dtree(crop)
+            print(dtree(crop))
+            if decision == "fertilizer":
+                self.player.fertilizer.append(crop)
+            elif decision == "harvest":
+                self.player.harvest.append(crop)
+            elif decision == "water":
+                self.player.water.append(crop)
+            elif decision == "pest":
+                self.player.pest.append(crop)
+            elif decision == "harvest":
+                self.player.weed.append(crop)
+
     def events(self):
         # catch all events here
         for event in pg.event.get():
@@ -115,6 +134,10 @@ class Game:
                 # values flipped for compatibility with a* algorithm
                 # print("generated path: " + str(path))
                 self.path = list(map(lambda t: (t[1], t[0]), self.path))
+            if event.type == pg.KEYDOWN:
+                # this event start the day and crop harvesting
+                if event.key == pg.K_RETURN:
+                    print("enter!!!")
 
         # move player according to generated path
         if len(self.path) > 0:
